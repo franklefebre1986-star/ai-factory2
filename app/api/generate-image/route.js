@@ -1,25 +1,32 @@
+import OpenAI from "openai";
+
 export async function POST(req) {
-  const { prompt } = await req.json();
+  try {
+    const { prompt } = await req.json();
 
-  const response = await fetch(
-    "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ inputs: prompt }),
+    if (!prompt) {
+      return new Response(JSON.stringify({ error: "Missing prompt" }), { status: 400 });
     }
-  );
 
-  if (!response.ok) {
-    return new Response("Model error", { status: 500 });
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
+    const result = await openai.images.generate({
+      model: "gpt-image-1",
+      prompt: prompt,
+      size: "1024x1024"
+    });
+
+    const image_base64 = result.data[0].b64_json;
+
+    return new Response(
+      JSON.stringify({ image: image_base64 }),
+      { status: 200 }
+    );
+
+  } catch (error) {
+    console.error("API ERROR:", error);
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
-
-  const buffer = await response.arrayBuffer();
-  const base64 = Buffer.from(buffer).toString("base64");
-
-  return new Response(base64, {
-    headers: { "Content-Type": "text/plain" }
-  });
 }
