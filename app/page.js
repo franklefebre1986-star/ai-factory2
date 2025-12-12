@@ -38,7 +38,12 @@ export default function Home() {
 
       {image && (
         <div style={{ marginTop: 20 }}>
-          <img src={image} alt="Generated" style={{ maxWidth: "400px" }} />
+          <img
+  src={`data:image/png;base64,${image}`}
+  alt="Generated"
+  style={{ maxWidth: "400px" }}
+/>
+
         </div>
       )}
     </main>
