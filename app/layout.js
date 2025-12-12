@@ -1,3 +1,5 @@
+import './globals.css';
+
 export const metadata = {
   title: "AI Factory",
   description: "Text to Image & Video AI generator",
