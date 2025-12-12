@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -18,19 +20,16 @@ export async function POST(req) {
       size: "1024x1024",
     });
 
-    // 👉 DIT is cruciaal
     const base64Image = result.data[0].b64_json;
 
     return new Response(
       JSON.stringify({ image: base64Image }),
-      {
-        headers: { "Content-Type": "application/json" },
-      }
+      { headers: { "Content-Type": "application/json" } }
     );
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error("IMAGE ERROR:", error);
     return new Response(
-      JSON.stringify({ error: err.message }),
+      JSON.stringify({ error: error.message }),
       { status: 500 }
     );
   }
