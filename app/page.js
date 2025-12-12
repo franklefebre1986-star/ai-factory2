@@ -17,28 +17,25 @@ export default function Home() {
     });
 
     const data = await res.json();
-    setImage(data.image);
+
+    // 🔴 HIER GING HET AL DIE TIJD MIS
+    setImage(data.image); // ← ALLEEN base64
     setLoading(false);
   }
 
   return (
-    <main style={{ padding: "40px", color: "white" }}>
+    <main style={{ padding: 40, color: "white" }}>
       <h1>AI Factory</h1>
       <h2>Text → Image Generator</h2>
 
       <input
-        type="text"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
         placeholder="Describe your image..."
-        style={{ padding: 10, width: "300px" }}
+        style={{ padding: 10, width: 300 }}
       />
 
-      <button
-        onClick={generate}
-        style={{ padding: 10, marginLeft: 10 }}
-        disabled={loading}
-      >
+      <button onClick={generate} disabled={loading}>
         {loading ? "Generating..." : "Generate Image"}
       </button>
 
@@ -47,7 +44,7 @@ export default function Home() {
           <img
             src={`data:image/png;base64,${image}`}
             alt="Generated"
-            style={{ maxWidth: "400px" }}
+            style={{ maxWidth: 400 }}
           />
         </div>
       )}
