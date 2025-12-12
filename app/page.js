@@ -18,10 +18,9 @@ export default function Home() {
       body: JSON.stringify({ prompt }),
     });
 
-    const data = await res.json();
+    const data = await res.json(); // 🔥 HIER ZAT DE FOUT
 
-    // ✅ HIER zit de fix
-    setImage(`data:image/png;base64,${data.image}`);
+    setImage(`data:image/png;base64,${data.image}`); // 🔥 ALLEEN image
 
     setLoading(false);
   }
