@@ -14,14 +14,15 @@ export default function Home() {
 
     const res = await fetch("/api/generate-image", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt }),
     });
 
     const data = await res.json();
-    setImage(data.image);
+
+    // ✅ HIER zit de fix
+    setImage(`data:image/png;base64,${data.image}`);
+
     setLoading(false);
   }
 
@@ -48,7 +49,7 @@ export default function Home() {
       {image && (
         <div style={{ marginTop: 20 }}>
           <img
-            src={`data:image/png;base64,${image}`}
+            src={image}
             alt="Generated"
             style={{ maxWidth: "400px", border: "1px solid #444" }}
           />
