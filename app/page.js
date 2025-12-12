@@ -1,5 +1,3 @@
-// PROMPT GENERATOR v1
-
 "use client";
 
 import { useState } from "react";
@@ -14,10 +12,8 @@ export default function Home() {
 
     setLoading(true);
 
-    // Fake “AI thinking” — maar wél slim opgebouwd
     setTimeout(() => {
-      const result = `Ultra-detailed, cinematic image of ${idea}, shot with a professional DSLR camera, shallow depth of field, dramatic lighting, ultra realistic textures, high resolution, sharp focus, masterpiece quality.`;
-
+      const result = `Ultra-detailed cinematic image of ${idea}, professional photography, dramatic lighting, shallow depth of field, ultra realistic, 8K, masterpiece quality.`;
       setPrompt(result);
       setLoading(false);
     }, 1200);
@@ -49,7 +45,7 @@ export default function Home() {
           <textarea
             value={prompt}
             readOnly
-            rows={5}
+            rows={6}
             style={{ width: "100%", padding: "10px" }}
           />
         </div>
