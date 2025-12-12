@@ -1,3 +1,5 @@
+// PROMPT GENERATOR v1
+
 "use client";
 
 import { useState } from "react";
