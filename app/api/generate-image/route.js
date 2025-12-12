@@ -1,15 +1,10 @@
+export const runtime = "nodejs";
+
 import OpenAI from "openai";
 
 export async function POST(req) {
   try {
     const { prompt } = await req.json();
-
-    if (!prompt) {
-      return new Response(
-        JSON.stringify({ error: "Missing prompt" }),
-        { status: 400 }
-      );
-    }
 
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
@@ -28,9 +23,10 @@ export async function POST(req) {
       { status: 200 }
     );
   } catch (err) {
-    console.error(err);
+    console.error("IMAGE API ERROR:", err);
+
     return new Response(
-      JSON.stringify({ error: "Generation failed" }),
+      JSON.stringify({ error: "Image generation failed" }),
       { status: 500 }
     );
   }
