@@ -18,8 +18,12 @@ export default function Home() {
 
     const data = await res.json();
 
-    // 🔴 HIER GING HET AL DIE TIJD MIS
-    setImage(data.image); // ← ALLEEN base64
+    if (data.image) {
+      setImage(data.image);
+    } else {
+      alert("Geen afbeelding ontvangen");
+    }
+
     setLoading(false);
   }
 
@@ -29,13 +33,18 @@ export default function Home() {
       <h2>Text → Image Generator</h2>
 
       <input
+        type="text"
+        placeholder="Describe your image..."
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-        placeholder="Describe your image..."
         style={{ padding: 10, width: 300 }}
       />
 
-      <button onClick={generate} disabled={loading}>
+      <button
+        onClick={generate}
+        style={{ padding: 10, marginLeft: 10 }}
+        disabled={loading}
+      >
         {loading ? "Generating..." : "Generate Image"}
       </button>
 
