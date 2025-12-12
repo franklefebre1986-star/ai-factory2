@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -10,17 +12,15 @@ export async function POST(req) {
 
     const result = await openai.images.generate({
       model: "gpt-image-1",
-      prompt: prompt,
+      prompt,
       size: "512x512",
     });
 
-    const imageBase64 = result.data[0].b64_json;
-
-    return new Response(imageBase64, {
+    return new Response(result.data[0].b64_json, {
       status: 200,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return new Response("Image generation failed", { status: 500 });
   }
 }
